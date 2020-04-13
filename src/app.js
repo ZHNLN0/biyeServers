@@ -1,10 +1,13 @@
+const path = require('path')
 const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
+// const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body')
 const logger = require('koa-logger')
+// const koaStatic = require('koa-static')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const cors = require('koa2-cors')
@@ -14,6 +17,7 @@ const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const utils = require('./routes/utils')
 
 const { isDev } = require('./utils/env')
 
@@ -35,13 +39,27 @@ app.use(cors({
 onerror(app)
 
 // middlewares
-app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text']
+// app.use(bodyparser({
+//   enableTypes: ['json', 'form', 'text']
+// }))
+
+app.use(koaBody({
+  formidable: {
+    // 设置文件的默认保存目录，不设置则保存在系统临时目录下  
+    uploadDir: path.resolve(__dirname, '../uploadFiles')
+  },
+  multipart: true // 支持文件上传
 }))
+
+// app.use(koaStatic(
+//   path.resolve(__dirname, '../uploadFiles')
+// ))
+
+
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
-
+app.use(require('koa-static')(path.join(__dirname, '..', 'uploadFiles')))
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
@@ -72,7 +90,7 @@ app.use(session({
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
-
+app.use(utils.routes(), utils.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

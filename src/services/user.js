@@ -44,7 +44,8 @@ async function createUser({ account, password, nickName }) {
   const result = await User.create({
     account,
     password,
-    nickName: nickName ? nickName : account
+    nickName: nickName ? nickName : account,
+    roles: 1
   })
 
   const data = result.dataValues

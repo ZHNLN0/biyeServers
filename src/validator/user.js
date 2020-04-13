@@ -26,6 +26,11 @@ const SCHEMA = {
     avatar: {
       type: 'string',
       maxLength: 255
+    },
+    roles: {
+      type: 'number',
+      minimum: 1,
+      maximum: 3
     }
   }
 }
