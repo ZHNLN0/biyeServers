@@ -12,12 +12,13 @@ const { loginCheck } = require('../middlewares/loginCheck')
 
 router.prefix('/api/user')
 
-// 注册路由
+// 检测用户是否存在
 router.post('/isExist', async(ctx, next) => {
   const { account } = ctx.request.body
   ctx.body = await isExist(account)
 })
 
+// 用户注册路由
 router.post('/register', genValidator(userValidator), async(ctx, next) => {
   const { account, password } = ctx.request.body
   ctx.body = await register({
@@ -26,12 +27,14 @@ router.post('/register', genValidator(userValidator), async(ctx, next) => {
   })
 })
 
+// 用户登录
 router.post('/login', async(ctx, next) => {
   const { account, password } = ctx.request.body
   console.log(account)
   ctx.body = await login(ctx, account, password)
 })
 
+// 用户修改信息路由
 router.post('/changeInfo', loginCheck, koaFrom(), genValidator(userValidator), async(ctx, next) => {
   const { nickName, avatar, signature } = ctx.request.body
   ctx.body = await changeInfo(ctx, { nickName, avatar, signature })

@@ -17,6 +17,7 @@ const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const bills = require('./routes/bills')
 const utils = require('./routes/utils')
 
 const { isDev } = require('./utils/env')
@@ -31,7 +32,7 @@ app.use(cors({
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
   credentials: true,
-  allowMethods: ['GET', 'POST', 'DELETE'], // 允许跨域的方法
+  allowMethods: ['GET', 'POST', 'DELETE', 'PUT'], // 允许跨域的方法
   allowHeaders: ['Content-Type', 'Authorization', 'Accept']
 }))
 
@@ -90,6 +91,7 @@ app.use(session({
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(bills.routes(), bills.allowedMethods())
 app.use(utils.routes(), utils.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {

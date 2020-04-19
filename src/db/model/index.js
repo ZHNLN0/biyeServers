@@ -4,7 +4,13 @@
  */
 
 const User = require('./User')
+const Bill = require('./Bill')
+
+Bill.belongsTo(User, {
+  foreignKey: 'userId'
+})
 
 module.exports = {
-  User
+  User,
+  Bill
 }

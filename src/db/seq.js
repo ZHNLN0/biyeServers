@@ -18,6 +18,7 @@ if(isTest) {
   conf.loggin = () => {}
 }
 
+// 线上环境配置：连接池最大为2，10000毫秒未使用被释放
 if(isProd) {
   conf.pool = {
     max: 2,

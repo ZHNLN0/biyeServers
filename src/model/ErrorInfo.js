@@ -65,9 +65,17 @@ module.exports = {
     message: '取消关注失败'
   },
   // 创建微博失败
-  createBlogFailInfo: {
+  createBillExistInfo: {
     code: 11001,
-    message: '创建微博失败，请重试'
+    message: '账单已存在，请修改账单'
+  },
+  createBillFileInfo: {
+    code: 11002,
+    message: '账单创建失败，请重试'
+  },
+  getBillFileInfo: {
+    code: 11003,
+    message: '账单查询失败，请重试'
   },
   // 删除微博失败
   deleteBlogFailInfo: {
