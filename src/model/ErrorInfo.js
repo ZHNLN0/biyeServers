@@ -77,6 +77,10 @@ module.exports = {
     code: 11003,
     message: '账单查询失败，请重试'
   },
+  updateBillFileInfo: {
+    code: 11004,
+    message: '账单更新失败，请重试'
+  },
   // 删除微博失败
   deleteBlogFailInfo: {
     code: 11002,

@@ -3,9 +3,9 @@
  * @author 抖腿震地球
  */
 
-const { searchBillInfo, createBillInfo } = require('../services/bill')
+const { searchBillInfo, createBillInfo, getBillList } = require('../services/bill')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { createBillFileInfo, createBillExistInfo, getBillFileInfo } = require('../model/ErrorInfo')
+const { createBillFileInfo, createBillExistInfo, getBillFileInfo, updateBillFileInfo } = require('../model/ErrorInfo')
 /**
  * @description 检查丹田是否已创建账单
  * @param {Number} userId userId
@@ -44,20 +44,36 @@ async function createBill({ userId, time, eat, shopping, trip, live, other }) {
 }
 
 async function searchBill(userId, time) {
-  const billInfoList = await searchBillInfo(userId, time, type)
-  if(billInfoList) {
+  const bill = await searchBillInfo(userId, time)
+  if(bill) {
     return new SuccessModel(billInfoList)
   } else {
     return new ErrorModel(getBillFileInfo)
   }
 }
 
-async function getBillList({ userId, pageIndex, pageSize }) {
-  
+async function getBills({ userId, pageIndex, pageSize }) {
+  const bills = await getBillList({ userId, pageIndex, pageSize })
+  if(bills) {
+    return new SuccessModel(bills)
+  } else {
+    return new ErrorModel(getBillFileInfo)
+  }
+}
+
+async function undateBillData({ userId, time, eat, trip, shopping, live, other }) {
+  const result = await undateBill({ userId, time, eat, trip, shopping, live, other })
+  if(result) {
+    return new SuccessModel()
+  } else {
+    return new ErrorModel(updateBillFileInfo)
+  }
 }
 
 module.exports = {
   isExist,
   createBill,
-  searchBill
+  searchBill,
+  getBills,
+  undateBillData
 }
