@@ -18,6 +18,7 @@ const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 const index = require('./routes/index')
 const users = require('./routes/users')
 const bills = require('./routes/bills')
+const diaries = require('./routes/diaries')
 const utils = require('./routes/utils')
 
 const { isDev } = require('./utils/env')
@@ -93,6 +94,7 @@ app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(bills.routes(), bills.allowedMethods())
 app.use(utils.routes(), utils.allowedMethods())
+app.use(diaries.routes(), diaries.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)

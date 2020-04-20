@@ -5,12 +5,18 @@
 
 const User = require('./User')
 const Bill = require('./Bill')
+const Diary = require('./Diary')
 
 Bill.belongsTo(User, {
   foreignKey: 'userId'
 })
 
+Diary.belongsTo(User, {
+  foreignKey: 'userId'
+})
+
 module.exports = {
   User,
-  Bill
+  Bill,
+  Diary
 }

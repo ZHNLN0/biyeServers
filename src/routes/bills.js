@@ -4,7 +4,7 @@
  */
 
 const router = require('koa-router')()
-const { isExist, createBill, searchBill, getBills } = require('../controller/bill')
+const { isExist, createBill, searchBill, getBills, updateBillData } = require('../controller/bill')
 const { loginCheck } = require('../middlewares/loginCheck')
 const billValidate = require('../validator/bill')
 const { genValidator } = require('../middlewares/validator')
@@ -24,10 +24,10 @@ router.put('/createBill', loginCheck, genValidator(billValidate), async(ctx, nex
   const { id: userId } = ctx.session.userInfo
   ctx.body = await createBill({ userId, time, eat, shopping, trip, live, other })
 
-})
+})  
 
 router.get('/searchBill', loginCheck, async(ctx, next) => {
-  const { time } = ctx.request.body
+  const { time } = ctx.query
   const { id: userId } = ctx.session.userInfo
   ctx.body = await searchBill(userId, time)
 })
@@ -41,7 +41,7 @@ router.get('/getBillList', loginCheck, async(ctx, next) => {
 router.post('/updateBill', loginCheck, genValidator(billValidate), async(ctx, next) => {
   const { time, eat, trip, shopping, live, other } = ctx.request.body
   const { id: userId } = ctx.session.userInfo
-  ctx.body = await undateBillData({ userId, time, eat, trip, shopping, live, other })
+  ctx.body = await updateBillData({ userId, time, eat, trip, shopping, live, other })
 })
 
 module.exports = router

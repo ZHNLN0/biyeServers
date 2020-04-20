@@ -3,7 +3,7 @@
  * @author 抖腿震地球
  */
 
-const { searchBillInfo, createBillInfo, getBillList } = require('../services/bill')
+const { searchBillInfo, createBillInfo, getBillList, updateBill } = require('../services/bill')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBillFileInfo, createBillExistInfo, getBillFileInfo, updateBillFileInfo } = require('../model/ErrorInfo')
 /**
@@ -44,8 +44,8 @@ async function createBill({ userId, time, eat, shopping, trip, live, other }) {
 }
 
 async function searchBill(userId, time) {
-  const bill = await searchBillInfo(userId, time)
-  if(bill) {
+  const billInfoList = await searchBillInfo(userId, time)
+  if(billInfoList) {
     return new SuccessModel(billInfoList)
   } else {
     return new ErrorModel(getBillFileInfo)
@@ -61,8 +61,8 @@ async function getBills({ userId, pageIndex, pageSize }) {
   }
 }
 
-async function undateBillData({ userId, time, eat, trip, shopping, live, other }) {
-  const result = await undateBill({ userId, time, eat, trip, shopping, live, other })
+async function updateBillData({ userId, time, eat, trip, shopping, live, other }) {
+  const result = await updateBill({ userId, time, eat, trip, shopping, live, other })
   if(result) {
     return new SuccessModel()
   } else {
@@ -75,5 +75,5 @@ module.exports = {
   createBill,
   searchBill,
   getBills,
-  undateBillData
+  updateBillData
 }

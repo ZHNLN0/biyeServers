@@ -5,7 +5,7 @@
 const { Bill } = require('../db/model/index')
 
 
-async function searchBillInfo(userId, time, type) {
+async function searchBillInfo(userId, time) {
  
   // 执行查询语句
   const result = await Bill.findOne({
@@ -29,13 +29,8 @@ async function getBillList({ userId, pageIndex = 1, pageSize = 10 }) {
     order: [
       ['id', 'desc']
     ],
-    include: [
-      {
-        model: Bill,
-        attributes: ['time', 'eat', 'trip', 'shopping', 'live', 'other'],
-        where: { userId }
-      }
-    ]
+    where: { userId },
+    attributes: ['time', 'eat', 'shopping', 'trip', 'live', 'other']
   })
   const billList = result.rows.map(row => row.dataValues)
   return {
