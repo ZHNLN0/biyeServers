@@ -75,7 +75,6 @@ async function register({ account, password, roles }) {
  */
 async function login(ctx, account, password) {
   const userInfo = await getUserInfo(account, doCrypto(password))
-  console.log(userInfo)
   if(!userInfo) {
     // 登录失败
     return new ErrorModel(loginFailInfo)

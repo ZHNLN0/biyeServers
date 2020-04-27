@@ -20,6 +20,9 @@ const SCHEMA = {
       type: 'string',
       maxLength: 300,
       minLength: 1
+    },
+    status: {
+      type: 'number'
     }
   }
 }

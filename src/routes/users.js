@@ -30,7 +30,6 @@ router.post('/register', genValidator(userValidator), async(ctx, next) => {
 // 用户登录
 router.post('/login', async(ctx, next) => {
   const { account, password } = ctx.request.body
-  console.log(account)
   ctx.body = await login(ctx, account, password)
 })
 

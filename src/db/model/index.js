@@ -15,6 +15,7 @@ Diary.belongsTo(User, {
   foreignKey: 'userId'
 })
 
+
 module.exports = {
   User,
   Bill,
