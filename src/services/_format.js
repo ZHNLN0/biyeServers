@@ -43,6 +43,29 @@ function formatUser(list) {
   return _formatUserSignature(_formatUserAvatar(list)) 
 }
 
+/**
+ * 格式化日记
+ * @param {Array|Object} list 
+ */
+function formatDiary(list) {
+  if(list === null) {
+    return list
+  }
+  if(list instanceof Array) {
+    return list.map(v => {
+      const { time, title, content, user } = v.dataValues
+      const userInfo = _formatUserAvatar(user.dataValues)
+      return {
+        time,
+        title,
+        content,
+        ...userInfo
+      }
+    })
+  }
+}
+
 module.exports = {
-  formatUser
+  formatUser,
+  formatDiary
 }

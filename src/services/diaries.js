@@ -3,6 +3,7 @@
  * @author 抖腿震地球
  */
 const { Diary, User } = require('../db/model/index')
+const { formatDiary } = require('./_format')
 
 async function createDiary({ userId, time, title, content, status, nickName, avatar }) {
   const result = Diary.create({
@@ -40,15 +41,21 @@ async function searchDiary(userId, time) {
 }
 async function getDiaryList(pageIndex, pageSize) {
   const result = await Diary.findAndCountAll({
-    limit: pageSize, // 每页多少条
-    offset: pageSize * pageIndex - pageSize,
-    where: { status: 2 },
     order: [
       ['time', 'desc']
     ],
-    attributes: ['nickName', 'avatar', 'time', 'title', 'content']
+    attributes: ['time', 'title', 'content'],
+    include: [
+      {
+        model: User,
+        attributes: ['nickName', 'avatar']
+      }
+    ],
+    offset: pageSize * pageIndex - pageSize,
+    limit: pageSize - 0, // 每页多少条
+    where: { status: 2 }  
   })
-  const diaryList = result.rows.map(row => row.dataValues)
+  const diaryList = formatDiary(result.rows)
   console.log(diaryList)
   return {
     diaryList,

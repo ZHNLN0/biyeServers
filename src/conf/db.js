@@ -7,13 +7,13 @@ const { isProd } = require('../utils/env')
 
 let REDIS_CONF = {
   port: '6379',
-  host: '127.0.0.1'
+  host: '114.55.29.41'
 }
 
 let MYSQL_CONF = {
-  host: '127.0.0.1',
+  host: '114.55.29.41',
   user: 'root',
-  password: '123456',
+  password: 'zhn@779602',
   port: '3306',
   database: 'biye_dev'
 }

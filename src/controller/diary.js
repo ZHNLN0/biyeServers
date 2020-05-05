@@ -42,10 +42,10 @@ async function searchDiaryInfo(userId, time) {
 
 async function getDiaryListInfo(pageIndex, pageSize = 10) {
   const result = await getDiaryList(pageIndex, pageSize)
-  if(result.diaryList.length = 0) {
+  if(result.diaryList.length === 0) {
     return new ErrorModel()
   }
-  return result
+  return new SuccessModel(result)
 }
 
 module.exports = {
