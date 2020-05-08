@@ -39,7 +39,15 @@ async function searchDiary(userId, time) {
   }
   return result.dataValues
 }
-async function getDiaryList(pageIndex, pageSize) {
+async function getDiaryList({ pageIndex, pageSize, userId }) {
+  let whereOpt = {
+    status: 2
+  }
+  if(userId !== null) {
+    whereOpt = {
+      userId
+    }
+  }
   const result = await Diary.findAndCountAll({
     order: [
       ['time', 'desc']
@@ -53,7 +61,7 @@ async function getDiaryList(pageIndex, pageSize) {
     ],
     offset: pageSize * pageIndex - pageSize,
     limit: pageSize - 0, // 每页多少条
-    where: { status: 2 }  
+    where: whereOpt  
   })
   const diaryList = formatDiary(result.rows)
   console.log(diaryList)

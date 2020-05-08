@@ -19,7 +19,15 @@ router.get('/getDiary', loginCheck, async(ctx, next) => {
 })
 
 router.get('/getDiaryList', async(ctx, next) => {
-  const { pageIndex, pageSize } = ctx.query
-  ctx.body = await getDiaryListInfo(pageIndex, pageSize)
+  const { pageIndex = 1, pageSize = 10, type = 'index' } = ctx.query
+  const { id: userId } = ctx.session.userInfo
+  const params = {
+    pageIndex,
+    pageSize
+  }
+  if(type === 'self') {
+    params.userid = userId
+  }
+  ctx.body = await getDiaryListInfo(params)
 })
 module.exports = router

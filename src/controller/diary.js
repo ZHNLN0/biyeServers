@@ -40,8 +40,8 @@ async function searchDiaryInfo(userId, time) {
   }
 }
 
-async function getDiaryListInfo(pageIndex, pageSize = 10) {
-  const result = await getDiaryList(pageIndex, pageSize)
+async function getDiaryListInfo({ pageIndex, pageSize = 10, userId = null }) {
+  const result = await getDiaryList({ pageIndex, pageSize, userId })
   if(result.diaryList.length === 0) {
     return new ErrorModel()
   }
