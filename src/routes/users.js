@@ -34,9 +34,18 @@ router.post('/login', async(ctx, next) => {
 })
 
 // 用户修改信息路由
-router.post('/changeInfo', loginCheck, koaFrom(), genValidator(userValidator), async(ctx, next) => {
-  const { nickName, avatar, signature } = ctx.request.body
-  ctx.body = await changeInfo(ctx, { nickName, avatar, signature })
+router.post('/changeInfo', loginCheck, async(ctx, next) => {
+  // const { nickName, signature } = ctx.request.body
+  // console.log(ctx.request.body)
+  // ctx.body = await changeInfo(ctx, { nickName, avatar, signature })
+  ctx.body = {
+    data() {
+      return {
+        code: 20000,
+        data: {}
+      }
+    }
+  }
 })
 
 module.exports = router
